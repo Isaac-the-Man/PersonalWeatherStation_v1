@@ -5,9 +5,6 @@ import serial
 import mysql.connector
 
 
-# whether or not to use the global mysq server
-useWebDB = True
-
 def list2Float(strList):
     try:
         concat = ''.join(strList)
@@ -23,11 +20,6 @@ mydb = mysql.connector.connect(
     user='pi',
     passwd='pass',
     database='weatherDB'
-) if not useWebDB else mysql.connector.connect(
-        unix_socket='/cloudsql/weather-station-2019:asia-east1:weather-station-2019-sqlserver',
-        user='weatherPi',
-        passwd='Tknu2788',
-        database='weatherDB'
 )
 mycursor = mydb.cursor()
 
@@ -65,4 +57,3 @@ with serial.Serial(dev, 9600, timeout=1) as ser:
             else:
                 # single letter is read
                 buffer.append(decoded)
-
